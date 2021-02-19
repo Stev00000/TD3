@@ -1,6 +1,12 @@
 class Element {
     constructor(ligne, colonne, spriteURL) {
-        // à compléter
+        this.ligne = ligne;
+        this.colonne = colonne;
+        this.spriteElement = document.createElement("img");
+        this.spriteElement.src = spriteURL;
+        this.spriteElement.classList.add("element");
+
+        this.placer(this.ligne, this.colonne);
     }
 
     /**
@@ -9,7 +15,19 @@ class Element {
      * @param colonne {Number} indice de la colonne où placer l'élément
      */
     placer(ligne, colonne) {
-        // à compléter
+
+        if (ligne < minCell || ligne > maxCell || colonne < minCell || colonne > maxCell) {
+            console.log("Location Error");
+            return;
+        } else {
+            this.ligne = ligne;
+            this.colonne = colonne;
+    
+            
+            this.spriteElement.style.top = 51 + this.ligne * 20 + "px";
+            this.spriteElement.style.left = 51 + this.colonne * 20 + "px";
+        }
+
     }
 
     /**
@@ -17,7 +35,8 @@ class Element {
      * Ajoute l'élément (= la balise) dans le <div id="champ">
      */
     afficher() {
-        // à compléter
+        const champDiv = document.getElementById("champ");
+        champDiv.appendChild(this.spriteElement)
     }
 
     /**
@@ -25,28 +44,31 @@ class Element {
      * Supprime l'élément du <div id="champ">
      */
     cacher() {
-        // à compléter
+        this.spriteElement.remove();
     }
 }
 
 
 class Tresor extends Element {
     constructor(colonne) {
-        // à compléter
+        super(minCell, colonne, "img/tresor.png");
+        this.afficher();
     }
 }
 
 
 class Mine extends Element {
     constructor(ligne, colonne) {
-        // à compléter
+        super(ligne, colonne, "img/croix.png");
     }
 }
 
 
 class Personnage extends Element {
     constructor(colonne) {
-        // à compléter
+        super(maxCell, colonne, "img/personnage.png");
+        this.score = 200;
+        this.afficher();
     }
 
     /**
@@ -59,7 +81,18 @@ class Personnage extends Element {
      * @param dc {Number} déplacement horizontal du joueur (modifie la colonne)
      */
     deplacer(dl, dc) {
-        // à compléter
+        let cLigne = this.ligne + dl;
+        let cColonne = this.colonne + dc;
+
+
+        if (cLigne < minCell || cLigne > maxCell || cColonne < minCell || cColonne > maxCell) {
+            console.log("Error");
+            return;
+        } else {
+            this.placer(cLigne, cColonne);
+        }
+
+
     }
 
     /**
@@ -68,6 +101,9 @@ class Personnage extends Element {
      * @param nbMinesVoisines {Number} nombre de mines dans les cases voisines
      */
     majSprite(nbMinesVoisines) {
-        // à compléter
+        if(nbMinesVoisines > 0) this.spriteElement.src = "img/personnage2.png";
+        else this.spriteElement.src = "img/personnage.png";
+
+//        this.afficher();
     }
 }

@@ -1,18 +1,22 @@
-let jeu;  // variable globale représentant le jeu actuel
+const maxCell = 19;
+const minCell = 0;
+
+let jeu = new Jeu(0.05);;
+
 
 document.addEventListener("keydown", function (event) {
     switch (event.key) {
         case 'ArrowLeft':
-            // déplacement vers la gauche
+            jeu.move("left");
             break;
         case 'ArrowUp':
-            // déplacement vers le haut
+            jeu.move("up");
             break;
         case 'ArrowRight':
-            // déplacement vers la droite
+            jeu.move("right");
             break;
         case 'ArrowDown':
-            // déplacement vers le bas
+            jeu.move("down");
             break;
         default:
     }
@@ -26,19 +30,17 @@ document.addEventListener("keydown", function (event) {
  * - affiche le score du joueur
  * - met à jour l'image représentant le joueur
  */
-function miseAJour() {
-    // à compléter
-}
+
 
 
 /**
  * Démarre une nouvelle partie
  */
 function nouvellePartie() {
-    // à compléter
+    jeu.cacherAll();
+    jeu = new Jeu(0.05);
 }
 
 
-window.addEventListener("load", function () {
-    // à compléter
-});
+window.addEventListener("load", nouvellePartie)
+document.getElementById("nouvelle-partie").addEventListener("click", nouvellePartie);
